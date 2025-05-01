@@ -229,7 +229,7 @@ class CollisionMode {
         this.toggleButton.style.backgroundColor = this.active ? '#F44336' : '#4CAF50';
         this.exportButton.style.display = this.active ? 'block' : 'none';
         this.collisionLayer.style.pointerEvents = this.active ? 'auto' : 'none';
-        this.toggleButton.style.display="none";
+        this.toggleButton.style.display="block";
         
         // Dispatch custom event for game to handle
         const event = new CustomEvent('collisionModeChanged', { detail: { active: this.active } });

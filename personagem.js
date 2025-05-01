@@ -53,20 +53,23 @@ class Personagem {
      * Load collision data from JSON
      */
     loadCollisions() {
-        fetch('Colisoes.json')
+        // Check if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Choose the appropriate collision file
+        const collisionFile = isMobile ? 'ColisoesMobile.json' : 'Colisoes.json';
+        
+        fetch(collisionFile)
             .then(response => response.json())
             .then(data => {
                 if (data.scenario === 'pallet-town') {
                     this.collisions = data.collisions;
-                    console.log(`Loaded ${this.collisions.length} collision boxes`);
-                    
-                 
-                        this.renderCollisionBoxes();
-                    
+                    console.log(`Loaded ${this.collisions.length} collision boxes from ${collisionFile}`);
+                    this.renderCollisionBoxes();
                 }
             })
             .catch(error => {
-                console.error('Error loading collision data:', error);
+                console.error(`Error loading collision data from ${collisionFile}:`, error);
             });
     }
     
@@ -142,8 +145,23 @@ class Personagem {
 }
 
 renderPlayerCollisionBox(container) {
-    const charWidth = 8;
-    const charHeight = 10;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Default screen dimensions
+    const defaultWidth = 1920;
+    const defaultHeight = 1080;
+    const defaultAspectRatio = defaultWidth / defaultHeight;
+    
+    // Current screen dimensions and aspect ratio
+    const currentWidth = window.innerWidth;
+    const currentHeight = window.innerHeight;
+    const currentAspectRatio = currentWidth / currentHeight;
+    
+    // Calculate scale factor for mobile
+    const scaleFactor = isMobile ? (currentAspectRatio / defaultAspectRatio-(defaultAspectRatio*0.2)) : 1;
+    
+    const charWidth = 8 * scaleFactor;
+    const charHeight = 10 * scaleFactor;
     
     const hitboxElement = document.createElement('div');
     hitboxElement.className = 'character-hitbox';
@@ -220,12 +238,7 @@ updateCoordinatesDisplay() {
         // Display coordinates with the sprite position matching virtual coordinates
         this.coordDisplay.textContent = `X: ${Math.round(this.x)}, Y: ${Math.round(this.y)} | Sprite: (${Math.round(this.x)},${Math.round(this.y)}) | Screen: ${screenWidth}x${screenHeight}`;
    
-      if(this.showCollisions) {
-        this.coordDisplay.style.display = 'block'; 
-      }else {
-        this.coordDisplay.style.display = 'none';
-      }
-       
+    
     }
 }
 getPosition() {
@@ -266,15 +279,26 @@ getPosition() {
      * @returns {boolean} - True if collision detected
      */
     checkCollision(x, y) {
-        // Character hitbox size (adjust these values as needed)
-        const charWidth = 4; // Smaller hitbox for better precision
-        const charHeight = 4; // Smaller hitbox for better precision
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const currentAspectRatio = window.innerWidth / window.innerHeight;
+        const defaultAspectRatio = 1920 / 1080;
+        const scaleFactor = isMobile ? (currentAspectRatio / defaultAspectRatio) : 1;
         
-        // Calculate character boundaries from center point
-        const charLeft = x + charWidth*0.8;
-        const charRight = x + charWidth*3;
-        const charTop = y + charHeight;
-        const charBottom = y + charHeight*4;
+        const charWidth = 4 * scaleFactor;
+        const charHeight = 4 * scaleFactor;
+
+      
+        const leftOffset = isMobile? 0.5: 0.8;
+        const rightOffset = isMobile? 2 :  3;
+        const topOffset = isMobile ? 1.75 : 1;
+        const bottomOffset = isMobile ? 3 : 4;
+
+
+        
+        const charLeft = x + charWidth * leftOffset;
+        const charRight = x + charWidth * rightOffset;
+        const charTop = y + charHeight * topOffset;
+        const charBottom = y + charHeight * bottomOffset;
         
         for (const box of this.collisions) {
             // Calculate box boundaries from center point
@@ -341,14 +365,14 @@ getPosition() {
      * Update coordinates display
      */
 
-    // Update the mover method to use 0.75 speed and 5-frame animation interval
     mover(direction) {
         // Set direction
         this.direction = direction;
         this.moving = true;
         
-        // Update position based on direction
-        const speed = 1.75;
+        // Check if device is mobile and set appropriate speed
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const speed = isMobile ? 0.8 : 1;
         
         // Calculate next position
         let nextX = this.x;

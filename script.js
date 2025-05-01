@@ -143,12 +143,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function checkTextTriggers(position) {
+        // Check if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
         for (const trigger of textData) {
             if (trigger.scenario === 'pallet-town') {
-                const inTriggerArea = position.x >= trigger.trigger.x - trigger.trigger.largura / 2 &&
-                                    position.x <= trigger.trigger.x + trigger.trigger.largura / 2 &&
-                                    position.y >= trigger.trigger.y - trigger.trigger.altura / 2 &&
-                                    position.y <= trigger.trigger.y + trigger.trigger.altura / 2;
+                // Select appropriate trigger based on device type
+                const triggerArea = isMobile ? trigger.Mobiletrigger : trigger.trigger;
+                
+                const inTriggerArea = position.x >= triggerArea.x - triggerArea.largura / 2 &&
+                                    position.x <= triggerArea.x + triggerArea.largura / 2 &&
+                                    position.y >= triggerArea.y - triggerArea.altura / 2 &&
+                                    position.y <= triggerArea.y + triggerArea.altura / 2;
     
                 if (inTriggerArea && currentTrigger !== trigger) {
                     showText(trigger.texto);

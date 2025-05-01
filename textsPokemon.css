@@ -1,0 +1,30 @@
+
+@font-face {
+  font-family: 'PokemonFont';
+  src: url('assets/font/pokemon-firered-leafgreen-font-recreation.ttf') format('truetype');
+}
+
+* {
+  font-family: 'PokemonFont', sans-serif;
+}
+
+#text-display {
+    position: fixed;
+    bottom: 45%;
+    left: 20%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.142);
+    color: rgb(0, 0, 0);
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-family: 'PokemonFont';
+    font-size: 20px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    max-width: 30%;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 100;
+}

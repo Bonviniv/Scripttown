@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scripttown</title>
+    <link rel="icon" href="assets/logo/logo.png">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="textsPokemon.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background layer (scalable) -->
+        <div id="background"></div>
+        
+        <!-- Scenario layer (fixed 1920x1080) -->
+        <div id="cenario"></div>
+        
+        <!-- Character layer -->
+        <div id="personagem"></div>
+        
+        <!-- Scenario overlay layer (for depth perspective) -->
+        <div id="cenario-overlay"></div>
+        
+        <!-- Controls for mobile -->
+        <div id="controles">
+            <button id="btn-up">W</button>
+            <button id="btn-left">A</button>
+            <button id="btn-down">S</button>
+            <button id="btn-right">D</button>
+        </div>
+        
+        <!-- Volume control -->
+        <div id="volume-control">
+            <span id="volume-icon">🔈</span>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+        </div>
+    </div>
+    
+    <!-- Audio element for background music -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="assets/music/index.mp3" type="audio/mp3">
+    </audio>
+    
+    <!-- Scripts -->
+    <script src="personagem.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Add these elements just before the closing </div> of game-container -->
+    <div id="collision-layer"></div>
+    <div id="collision-controls">
+        <button id="toggle-collision">Collision Mode: OFF</button>
+        <button id="export-collisions">Export Collisions</button>
+    </div>
+    
+    <!-- Add this before the closing </body> tag -->
+    <script src="index.js"></script>
+</body>
+</html>

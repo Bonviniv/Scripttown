@@ -1,0 +1,23 @@
+[
+    {
+      "scenario": "pallet-town",
+      "trigger": { "x": -100, "y": 85, "largura": 37, "altura": 29 },
+      "texto": "The new information center was recently inaugurated.\n Stop by the yellow building to learn more."
+    },
+    {
+      "scenario": "pallet-town",
+      "trigger": { "x": 70, "y": 110, "largura": 39, "altura": 24 },
+      "texto": "Information center,\n enter to explore."
+    },
+    {
+      "scenario": "pallet-town",
+      "trigger": { "x": -40, "y": 30, "largura": 36, "altura": 22 },
+      "texto": "Welcome to Scripttown!\n Read the signs and explore the buildings to get to know the city."
+    },
+    {
+      "scenario": "pallet-town",
+      "trigger": { "x": 10, "y": -120, "largura": 67, "altura": 26 },
+      "texto": "It seems like someone is taking a nap.\n Too bad I don't have the Poké Flute yet, maybe later..."
+    }
+  ]
+  

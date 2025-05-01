@@ -1,0 +1,29 @@
+
+[
+    {
+     "scenario": "pallet-town",
+      "trigger": { "x": 64, "y": 60, "largura": 30, "altura": 30, "pressing":"up" },
+      "destino": {
+       "scenario": "lab",
+        "spawn": { "x": 100, "y": 400 }
+      }
+    },
+    {
+        "scenario": "pallet-town",
+         "trigger": { "x": -95, "y": -35, "largura": 30, "altura": 30, "pressing":"up" },
+         "destino": {
+          "scenario": "casa",
+           "spawn": { "x": 100, "y": 400 }
+         }
+       }
+       ,
+    {
+        "scenario": "pallet-town",
+        "trigger": { "x": 50, "y": -35, "largura": 30, "altura": 30, "pressing":"up" },
+        "destino": {
+          "scenario": "casa2",
+           "spawn": { "x": 100, "y": 400 }
+         }
+       }
+  ]
+  

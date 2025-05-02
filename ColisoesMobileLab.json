@@ -2,110 +2,109 @@
     "scenario": "lab",
     "collisions": [
       {
-        "x": -39,
-        "y": -44,
-        "width": 60,
-        "height": 11,
-        "scenario": "lab"
-      },
-      {
-        "x": 42,
-        "y": -43,
-        "width": 38,
-        "height": 8,
-        "scenario": "lab"
-      },
-      {
-        "x": -3,
-        "y": -55,
-        "width": 134,
-        "height": 16,
-        "scenario": "lab"
-      },
-      {
-        "x": -2,
-        "y": -21,
-        "width": 25,
-        "height": 10,
-        "scenario": "lab"
-      },
-      {
-        "x": 28,
-        "y": -12,
-        "width": 30,
-        "height": 10,
-        "scenario": "lab"
-      },
-      {
-        "x": -63,
-        "y": -22,
-        "width": 10,
-        "height": 14,
-        "scenario": "lab"
-      },
-      {
-        "x": -46,
-        "y": -12,
-        "width": 22,
+        "x": -49,
+        "y": -59,
+        "width": 77,
         "height": 15,
         "scenario": "lab"
       },
       {
-        "x": 37,
-        "y": 24,
-        "width": 48,
+        "x": 56,
+        "y": -61,
+        "width": 49,
+        "height": 16,
+        "scenario": "lab"
+      },
+      {
+        "x": -1,
+        "y": -72,
+        "width": 179,
+        "height": 23,
+        "scenario": "lab"
+      },
+      {
+        "x": -2,
+        "y": -28,
+        "width": 29,
+        "height": 16,
+        "scenario": "lab"
+      },
+      {
+        "x": 36,
+        "y": -16,
+        "width": 34,
         "height": 12,
         "scenario": "lab"
       },
       {
-        "x": -42,
-        "y": 23,
-        "width": 47,
-        "height": 13,
-        "scenario": "lab"
-      },
-      {
-        "x": 57,
-        "y": 60,
+        "x": -83,
+        "y": -29,
         "width": 10,
-        "height": 8,
+        "height": 17,
         "scenario": "lab"
       },
       {
         "x": -62,
-        "y": 60,
-        "width": 11,
-        "height": 9,
+        "y": -18,
+        "width": 26,
+        "height": 21,
         "scenario": "lab"
       },
       {
-        "x": -72,
-        "y": -1,
-        "width": 7,
-        "height": 134,
-        "scenario": "lab"
-      },
-      {
-        "x": 68,
-        "y": 1,
-        "width": 6,
-        "height": 130,
-        "scenario": "lab"
-      },
-      {
-        "x": -40,
-        "y": 70,
-        "width": 59,
-        "height": 6,
-        "scenario": "lab"
-      },
-      {
-        "x": 40,
-        "y": 71,
+        "x": -56,
+        "y": 31,
         "width": 63,
-        "height": 7,
+        "height": 16,
+        "scenario": "lab"
+      },
+      {
+        "x": 49,
+        "y": 32,
+        "width": 62,
+        "height": 19,
+        "scenario": "lab"
+      },
+      {
+        "x": -82,
+        "y": 81,
+        "width": 8,
+        "height": 10,
+        "scenario": "lab"
+      },
+      {
+        "x": 76,
+        "y": 81,
+        "width": 11,
+        "height": 11,
+        "scenario": "lab"
+      },
+      {
+        "x": -95,
+        "y": 5,
+        "width": 10,
+        "height": 177,
+        "scenario": "lab"
+      },
+      {
+        "x": 91,
+        "y": 2,
+        "width": 15,
+        "height": 178,
+        "scenario": "lab"
+      },
+      {
+        "x": 54,
+        "y": 93,
+        "width": 91,
+        "height": 10,
+        "scenario": "lab"
+      },
+      {
+        "x": -57,
+        "y": 93,
+        "width": 86,
+        "height": 6,
         "scenario": "lab"
       }
     ]
   }
-  

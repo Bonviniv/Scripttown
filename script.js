@@ -8,6 +8,8 @@ let isTyping = false;
 // Initialize game when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add font-face declaration at the start
+    // Load texts for current scenario
+    loadTexts();
     const fontFace = new FontFace('PokemonFireRed', 'url("assets/fonts/pokemon-firered-leafgreen-font-recreation.ttf")');
     fontFace.load().then(function(loadedFace) {
         document.fonts.add(loadedFace);
@@ -62,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateVolumeIcon(previousVolume);
             }
         });
+
+
     
         // Helper function to update volume icon
         function updateVolumeIcon(value) {
@@ -176,11 +180,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function checkTextTriggers(position) {
+        // Get current page name
+        const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
+        const scenarioMap = {
+            'index': 'pallet-town',
+            'lab': 'lab',
+            'casa': 'casa',
+            'casa2': 'casa2'
+        };
+        const currentScenario = scenarioMap[currentPage] || 'pallet-town';
+
         // Check if device is mobile
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
         for (const trigger of textData) {
-            if (trigger.scenario === 'pallet-town') {
+            if (trigger.scenario === currentScenario) {
                 // Select appropriate trigger based on device type
                 const triggerArea = isMobile ? trigger.Mobiletrigger : trigger.trigger;
                 
@@ -200,6 +214,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // Add this function to load texts based on current scenario
+function loadTexts() {
+    const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
+    const scenarioMap = {
+        'index': 'pallet-town',
+        'lab': 'lab',
+        'casa': 'casa',
+        'casa2': 'casa2'
+    };
+    const currentScenario = scenarioMap[currentPage] || 'pallet-town';
+
+    fetch('Textos.json')
+        .then(response => response.json())
+        .then(data => {
+            // Filter texts for current scenario only
+            textData = data.filter(text => text.scenario === currentScenario);
+            console.log(`Loaded ${textData.length} texts for scenario: ${currentScenario}`);
+        })
+        .catch(error => {
+            console.error('Error loading texts:', error);
+        });
+}
 
     function typeWriterEffect(element, text, speed = 50) {
         let index = 0;

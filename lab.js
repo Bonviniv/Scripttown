@@ -104,17 +104,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for player movement to check trigger area
     document.addEventListener('playerMoved', (event) => {
-        const { position } = event.detail;
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const area = isMobile ? triggerArea.mobile : triggerArea.normal;
+        const currentPage = window.location.pathname.split('/').pop();
+        if (currentPage === 'lab.html') {
+            const { position } = event.detail;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const area = isMobile ? triggerArea.mobile : triggerArea.normal;
 
-        // Check if player is in trigger area
-        const inTriggerArea = position.x >= area.x - area.largura / 2 &&
-                            position.x <= area.x + area.largura / 2 &&
-                            position.y >= area.y - area.altura / 2 &&
-                            position.y <= area.y + area.altura / 2;
+            // Check if player is in trigger area
+            const inTriggerArea = position.x >= area.x - area.largura / 2 &&
+                                position.x <= area.x + area.largura / 2 &&
+                                position.y >= area.y - area.altura / 2 &&
+                                position.y <= area.y + area.altura / 2;
 
-        currentTrigger = inTriggerArea ? { imagePopup: true } : null;
+            currentTrigger = inTriggerArea ? { imagePopup: true } : null;
+        }
     });
 
     // Modify keyboard event listeners

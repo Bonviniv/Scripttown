@@ -35,6 +35,30 @@
       "Mobiletrigger": { "x": 36, "y": -8, "largura": 30, "altura": 15 },
       "texto": "Press ⬆️ to examine what's on the table.",
       "imagePopup": "assets/images/lab/outros/oaks-lab-links .png"
-  }
+  },
+  {
+    "scenario": "casa",
+    "trigger": { "x": 155, "y": -129, "largura": 46, "altura": 76},
+    "Mobiletrigger": { "x": 121, "y": -105, "largura": 60, "altura": 60 },
+    "texto": "Welcome to my room.\n While I'm away, Leela is in charge,\n if Leela's out, Clarinha is in charge"
+},
+{
+  "scenario": "casa",
+  "trigger": { "x": -99, "y": -116, "largura": 59, "altura": 35 },
+  "Mobiletrigger": { "x": -81, "y": -92, "largura": 44, "altura": 40 },
+  "texto": "I think this cat's name is Clarinha"
+},
+{
+  "scenario": "casa",
+  "trigger": { "x": -137, "y": 75, "largura": 43, "altura": 50 },
+  "Mobiletrigger": { "x": -113, "y": 56, "largura": 28, "altura": 53 },
+  "texto": "I think this cat's name is Leela"
+},
+{
+  "scenario": "casa",
+  "trigger": { "x": -199, "y": -113, "largura": 44, "altura": 54 },
+  "Mobiletrigger": { "x": -159, "y": -91, "largura": 38, "altura": 38 },
+  "texto": "Someone was writing code, \n and this scene looks a lot like this house"
+}
   ]
   

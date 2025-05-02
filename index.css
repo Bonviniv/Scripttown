@@ -183,14 +183,19 @@ body {
     pointer-events: none;
 }
 
+/* Collision mode styles */
 #collision-controls {
     position: fixed;
     top: 10px;
     right: 10px;
-    display: flex;
+    display: none;  /* Hidden by default */
     flex-direction: column;
     gap: 10px;
     z-index: 10;
+}
+
+#collision-controls.show {
+    display: flex;  /* Will be shown when 'c' is pressed */
 }
 
 #collision-controls button {

@@ -348,3 +348,10 @@ function loadTexts() {
     
     console.log('Game initialized');
 });
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'c' || e.key === 'C') {
+        const collisionControls = document.getElementById('collision-controls');
+        collisionControls.classList.toggle('show');
+    }
+});

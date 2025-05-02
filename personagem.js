@@ -55,6 +55,7 @@ class Personagem {
     
     }
     
+    
     /**
      * Load collision data from JSON
      */
@@ -184,8 +185,10 @@ renderPlayerCollisionBox(container) {
     // Calculate scale factor for mobile
     const scaleFactor = isMobile ? (currentAspectRatio / defaultAspectRatio-(defaultAspectRatio*0.2)) : 1;
     
-    const charWidth = 8 * scaleFactor;
-    const charHeight = 10 * scaleFactor;
+    // Check current page and set dimensions accordingly
+    const currentPage = window.location.pathname.split('/').pop();
+    const charWidth = currentPage === 'casa.html' ? 12 * scaleFactor : 8 * scaleFactor;
+    const charHeight = currentPage === 'casa.html' ? 15 * scaleFactor : 10 * scaleFactor;
     
     const hitboxElement = document.createElement('div');
     hitboxElement.className = 'character-hitbox';
@@ -255,14 +258,15 @@ atualizarDOM() {
  */
 updateCoordinatesDisplay() {
     if (this.coordDisplay) {
-        // Get screen dimensions
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
         
-        // Display coordinates with the sprite position matching virtual coordinates
-        this.coordDisplay.textContent = `X: ${Math.round(this.x)}, Y: ${Math.round(this.y)} | Sprite: (${Math.round(this.x)},${Math.round(this.y)}) | Screen: ${screenWidth}x${screenHeight}`;
-   
-    
+        if (this.showCollisions) {
+            this.coordDisplay.style.display = 'block';
+            this.coordDisplay.textContent = `X: ${Math.round(this.x)}, Y: ${Math.round(this.y)} | Sprite: (${Math.round(this.x)},${Math.round(this.y)}) | Screen: ${screenWidth}x${screenHeight}`;
+        } else {
+            this.coordDisplay.style.display = 'none';
+        }
     }
 }
 getPosition() {
@@ -390,15 +394,14 @@ getPosition() {
      */
 
     mover(direction) {
-        // Set direction
         this.direction = direction;
         this.moving = true;
         
-        // Check if device is mobile and set appropriate speed
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const speed = isMobile ? 0.8 : 1;
+        const baseSpeed = isMobile ? 0.8 * 1.5 : 1 * 1.5;  // Increased base speed by 1.5x
+        const currentPage = window.location.pathname.split('/').pop();
+        const speed = currentPage === 'casa.html' ? baseSpeed * 1.5 : baseSpeed;
         
-        // Calculate next position
         let nextX = this.x;
         let nextY = this.y;
         

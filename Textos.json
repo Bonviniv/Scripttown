@@ -22,6 +22,12 @@
       "trigger": { "x": 10, "y": -120, "largura": 67, "altura": 26 },
       "Mobiletrigger": { "x": 3, "y": -75, "largura": 49, "altura": 23 },
       "texto": "It seems like someone is taking a nap.\n Too bad I don't have the Poké Flute yet, maybe later..."
+    },
+    {
+      "scenario": "lab",
+      "trigger": { "x": -1, "y": -30, "largura": 49, "altura": 29 },
+      "Mobiletrigger": { "x": 3, "y": -75, "largura": 49, "altura": 23 },
+      "texto": "It seems like someone is taking a nap.\n Too bad I don't have the Poké Flute yet, maybe later..."
     }
   ]
   

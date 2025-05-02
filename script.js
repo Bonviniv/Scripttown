@@ -43,6 +43,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialValue = 15;
         volumeControl.style.background = `linear-gradient(to right, #7a7f7f ${initialValue}%, #c9cece ${initialValue}%)`;
         
+        // Add click handler for volume icon
+        volumeIcon.addEventListener('click', function() {
+            if (bgMusic.volume > 0) {
+                // Store current volume before muting
+                volumeIcon.dataset.previousVolume = volumeControl.value;
+                volumeControl.value = 0;
+                bgMusic.volume = 0;
+                volumeIcon.textContent = '🔇';
+                volumeControl.style.background = `linear-gradient(to right, #7a7f7f 0%, #c9cece 0%)`;
+            } else {
+                // Restore previous volume or default to 0.15
+                const previousVolume = volumeIcon.dataset.previousVolume || 0.15;
+                volumeControl.value = previousVolume;
+                bgMusic.volume = previousVolume;
+                const value = previousVolume * 100;
+                volumeControl.style.background = `linear-gradient(to right, #7a7f7f ${value}%, #c9cece ${value}%)`;
+                updateVolumeIcon(previousVolume);
+            }
+        });
+    
+        // Helper function to update volume icon
+        function updateVolumeIcon(value) {
+            if (value == 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (value <= 0.25) {
+                volumeIcon.textContent = '🔈';
+            } else if (value <= 0.50) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        }
+        
         // Play music when page loads
         document.addEventListener('click', function playAudio() {
             bgMusic.play();

@@ -47,26 +47,50 @@ class Personagem {
                 this.renderCollisionBoxes();
             
         });
+         // Add event listener for player position setting
+    document.addEventListener('setPlayerPosition', (event) => {
+        const { x, y } = event.detail;
+        this.setarPosicao(x, y);
+    });
+    
     }
     
     /**
      * Load collision data from JSON
      */
     loadCollisions() {
-        // Check if device is mobile
+        // Get current page name without .html extension
+        const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        // Choose the appropriate collision file
-        const collisionFile = isMobile ? 'ColisoesMobile.json' : 'Colisoes.json';
+
+        // Map pages to their collision files
+        let collisionFiles = {
+            'index': 'Colisoes.json',
+            'lab': 'ColisoesLab.json',
+            'casa': 'ColisoesCasa.json',
+            'casa2': 'ColisoesCasa2.json'
+        };
+        if(isMobile){
+            // Map pages to their collision files
+         collisionFiles = {
+            'index': 'ColisoesMobile.json',
+            'lab': 'ColisoesMobileLab.json',
+            'casa': 'ColisoesMobileCasa.json',
+            'casa2': 'ColisoesMobileCasa2.json'
+        };
+        }
+
+       
+    
+        // Get the appropriate collision file or default to Colisoes.json
+        const collisionFile = collisionFiles[currentPage] || 'Colisoes.json';
         
         fetch(collisionFile)
             .then(response => response.json())
             .then(data => {
-                if (data.scenario === 'pallet-town') {
-                    this.collisions = data.collisions;
-                    console.log(`Loaded ${this.collisions.length} collision boxes from ${collisionFile}`);
-                    this.renderCollisionBoxes();
-                }
+                this.collisions = data.collisions;
+                console.log(`Loaded ${this.collisions.length} collision boxes from ${collisionFile}`);
+                this.renderCollisionBoxes();
             })
             .catch(error => {
                 console.error(`Error loading collision data from ${collisionFile}:`, error);
@@ -393,6 +417,14 @@ getPosition() {
                 break;
         }
         
+        // Dispatch playerMoved event
+        document.dispatchEvent(new CustomEvent('playerMoved', {
+            detail: {
+                position: this.getPosition(),
+                direction: direction
+            }
+        }));
+        
         // Check for collision before moving
         if (!this.checkCollision(nextX, nextY)) {
             // No collision, update position
@@ -449,10 +481,14 @@ getPosition() {
      * @param {number} x - Virtual x coordinate
      * @param {number} y - Virtual y coordinate
      */
+   
     setarPosicao(x, y) {
         this.x = x;
         this.y = y;
+        this.frame = 0; // Reset animation frame
+        this.frameCounter = 0;
         this.atualizarDOM();
         this.updateCoordinatesDisplay();
+        this.atualizarSprite();
     }
 }

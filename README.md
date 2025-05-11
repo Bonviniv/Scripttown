@@ -29,7 +29,8 @@ A fully responsive interactive experience inspired by *Pokémon FireRed*, design
 
 ## 💡 Additional Functionalities
 
-- Custom debug mode allows manual collision editing by drag-and-drop  
+- Custom debug mode allows manual collision editing by drag-and-drop
+- Custom collision mode (press "C")
 - JSON export/import of collision data streamlines development  
 - Mobile version has separate collisions and trigger zones for precision  
 - All logic is modular and scene-based, allowing scalability  

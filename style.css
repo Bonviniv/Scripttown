@@ -1,0 +1,721 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #e0f7fa;
+}
+@font-face {
+  font-family: 'PokemonFont';
+  src: url('fonte/pokemon-firered-leafgreen-font-recreation.ttf') format('truetype');
+}
+
+* {
+  font-family: 'PokemonFont', sans-serif;
+}
+
+#position-display {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px;
+  z-index: 999; /* Ensure it's visible above other elements */
+}
+
+/* Animação para o fade out */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+#volume-control {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+#volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 150px;
+  height: 10px;
+  background: linear-gradient(to right, #7a7f7f 0%,#7a7f7f 15%,#c9cece 20%, #c9cece 50%, #c9cece 100%); /* Gradiente inicial */
+  border-radius: 5px;
+  outline: none;
+  /* Adicione esta transição para suavizar a mudança de cor */
+  transition: background 0.3s ease;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+#volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+#text-boxfix span {
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+
+#text-boxfix a {
+  color: #0a034b;             /* Cor dos links */
+  text-decoration: none;      /* Remove o sublinhado dos links */
+  padding: 5px 10px;          /* Espaçamento ao redor do texto */
+  border-radius: 5px;         /* Bordas arredondadas para os links */
+  transition: background-color 0.3s, color 0.3s; /* Transição suave */
+}
+
+#text-boxfix a:hover {
+  background-color: rgba(5, 5, 5, 0.1); /* Fundo preto com 10% de opacidade */
+  color: #171244;                       /* Mantém a cor original do texto */
+  text-decoration: none;                /* Garante que o sublinhado permaneça removido */
+}
+
+
+
+#text-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Mantém a imagem completa */
+}
+
+#text-box span {
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10;
+}
+
+
+#text-boxPlacaInicial {
+  position: absolute;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+ 
+}
+
+#text-boxPlacaInicial img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-boxPlacaInicial span {
+  color: #000000;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 0%;
+  text-align: center;
+  z-index: 10;
+  
+}
+
+
+
+
+#text-boxPlacaLab {
+  position: absolute;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#text-boxPlacaLab img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+}
+
+#text-boxPlacaLab span {
+  color: #000000;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 0%;
+  text-align: center;
+  z-index: 10;
+  
+}
+
+
+
+
+#text-box2 {
+  position: absolute;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#text-box2 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+}
+
+#text-box2 span {
+  color: #000000;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 0%;
+  text-align: center;
+  z-index: 10;
+  
+}
+
+
+
+#text-box3 {
+  position: absolute;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#text-box3 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+}
+
+#text-box3 span {
+  color: #000000;
+  top: 50%; /* 20% de 730px */
+  left: 75%; /* 2% de 1495px */
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%; /* Faz a imagem ocupar toda a largura do container */
+  height: 0%;
+  text-align: center;
+  z-index: 10;
+  
+}
+
+
+
+
+#text-box4 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 20%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-box4s span {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+.text-background4 {
+  position: absolute;
+  padding: -5% 40%; /* Ajuste o padding para cobrir o texto */
+  background-color: rgba(5, 5, 5, 0.1); /* Fundo opaco apenas no texto */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#text-box5 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 10%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-box5 span {
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+
+
+
+#text-box6 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 10%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-box6 span {
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+
+#text-box7 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 10%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-box7 span {
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+#text-box8 img {
+  flex-grow: 1; /* Permite que a imagem ocupe o espaço vertical disponível */
+  width: 10%; /* Faz a imagem ocupar toda a largura do container */
+  height: 100%; /* Faz a imagem ocupar toda a altura do container */
+  object-fit: contain; /* Mantém a proporção e evita distorções */
+  
+}
+
+#text-box8 span {
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+}
+
+
+
+/* Reset de margens e preenchimentos */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos para a div principal com overlay */
+
+
+/* Exibe a div de links apenas quando uma classe "active" é adicionada */
+#map-overlay-links.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Imagem de fundo invisível dentro de map-overlay-links */
+#overlay-image-links {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+
+
+/* Configuração para o SVG */
+svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Coloca o SVG sobre a imagem */
+}
+
+/* Estilo para áreas clicáveis do SVG */
+svg * {
+  fill: rgba(0, 255, 255, 0.4);
+  cursor: pointer;
+  opacity: 0; /* Invisível, mas clicável */
+}
+
+#collisionCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1495px;
+  height: 730px;
+  pointer-events: none;
+  z-index: 15;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1495px;
+  height: 730px;
+  pointer-events: none;
+}
+
+
+
+#character {
+  position: absolute;
+  width: 40px; /* Pode ser removido */
+  height: 40px; /* Pode ser removido */
+  background-image: url('images/tile000.png');
+  background-size: 100% 100%;
+  left: 747.5px; /* 50% da largura */
+  top: 365px; /* 50% da altura */
+  transform: translate(-50%, -50%) scale(1); /* A escala padrão começa em 1 */
+  z-index: 10;
+}
+
+#water-overlay {
+  position: absolute;
+  top: 575px; /* 62.2% da altura */
+  left: 853px; /* 45.5% da largura */
+  width: 90px; /* 8% da largura */
+  height: 124.1px; /* 17% da altura */
+  z-index: 12;
+  pointer-events: none;
+}
+
+#water-gif {
+  width: 60px; /* 50% da largura */
+  height: 70px; /* 50% da altura */
+  object-fit: cover;
+  opacity: 50%;
+}
+
+#text-boxfix {
+  position: absolute;
+  top: 182.5px; /* 25% da altura */
+  right: 70px; /* 2% da largura */
+  width: 500px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+
+#text-boxcasa {
+  position: absolute;
+  top: 250px; /* 20% da altura */
+  left: 300px; /* 15% da largura */
+  width: 100px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+
+#text-boxcasa span {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10;
+}
+#text-boxcasa img{
+  width: 450%;
+  height: 150%;
+  object-fit: contain; /* Mantém a imagem completa */
+}
+
+.text-backgroundcasa {
+  position: absolute;
+  padding: 45px 180px; /* 10% e 20% da altura e largura, respectivamente */
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#text-box {
+  position: absolute;
+  top: 230px; /* 20% da altura */
+  left: 224.25px; /* 15% da largura */
+  width: 300px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.text-background {
+  position: absolute;
+  padding: -1px 299px; /* 10% e 20% da altura e largura, respectivamente */
+  background-color: rgba(5, 5, 5, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#text-box-big span {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  position: absolute; /* Mantém o texto sobre a imagem */
+  text-align: center;
+  z-index: 10;
+  
+}
+
+
+
+
+
+
+.text-background2 {
+  position: absolute;
+  padding: 70px 250px; /* 14% e 47% da altura e largura */
+  background-color: rgba(5, 5, 5, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+#text-box4 {
+  position: absolute;
+  top: 146px; /* 20% da altura */
+  left: 14.95px; /* 1% da largura */
+  width: 598px; /* 40% da largura */
+  height: 365px; /* 50% da altura */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.text-background4 {
+  position: absolute;
+  padding: -1px 598px; /* -5% e 40% da altura e largura */
+  background-color: rgba(5, 5, 5, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#text-box5,
+#text-box6,
+#text-box7,
+#text-box8 {
+  position: absolute;
+  top: 146px; /* 20% da altura */
+  left: 89.7px; /* 6% da largura */
+  width: 463.45px; /* 31% da largura */
+  height: 365px; /* 50% da altura */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.text-background5,
+.text-background6,
+.text-background7,
+.text-background8 {
+  position: absolute;
+  padding: 65px 220px; /* 14% e 47% da altura e largura */
+  background-color: rgba(135, 135, 135, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.text-backgroundlinks {
+  position: absolute;
+  padding: -7.3px 598px; /* -1% e 40% da altura e largura */
+  background-color: rgba(5, 5, 5, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#map {
+  position: absolute;
+  width: 100vw; /* Faz o mapa cobrir toda a largura da tela */
+  height: 100vh; /* Faz o mapa cobrir toda a altura da tela */
+  overflow: hidden; /* Esconde qualquer parte que exceda o viewport */
+  z-index: 0; /* Mantém o mapa na posição inicial */
+}
+
+#mapup {
+  position: absolute;
+  width: 100vw; /* Faz o mapa cobrir toda a largura da tela */
+  height: 100vh; /* Faz o mapa cobrir toda a altura da tela */
+  overflow: hidden; /* Esconde qualquer parte que exceda o viewport */
+  z-index: 11;
+}
+
+
+#map, #mapup, #town-map, #lab-map, #casa-map, #casa2-map {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  
+}
+
+#map, #map-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+
+#map-overlay {
+  position: absolute;
+  width: 1495px;
+  height: 730px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#overlay-image {
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+   /* Garante que a imagem ocupe todo o espaço do container */
+}
+
+
+#map-overlay-links {
+  position: absolute;
+  
+  width: 1495px;
+  height: 730px;
+  z-index: 1000;
+  display: none;
+}
+
+
+#virtual-keyboard {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.horizontal-keys {
+  display: flex;
+  gap: 10px;
+}
+
+.virtual-key {
+  width: 50px;
+  height: 50px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.virtual-key:active {
+  background-color: #388E3C;
+}
+
+

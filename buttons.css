@@ -67,7 +67,61 @@
 }
 
 /* Mobile landscape controls */
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: 1000px) and (orientation: landscape) {
+
+    /* Volume control */
+#volume-control {
+    transform: translateY(-1400%);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    display: none;
+}
+
+#volume-icon {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+#volume {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 150px;
+    height: 10px;
+    background: linear-gradient(to right, #7a7f7f 50%, #c9cece 50%);
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+#volume::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
     #controles {
         position: fixed;
         bottom: 5px;
@@ -82,7 +136,8 @@
     }
 
     #controles button {
-        scale: 0.7;
+        transform: translateX(-800%);
+        scale: 0.8;
         width: 45px;
         height: 45px;
         font-size: 16px;
@@ -91,14 +146,15 @@
         transition: background-color 0.1s;
     }
 
-    #btn-up { grid-area: up; transform: translateY(40%); }
-    #btn-left { grid-area: left; transform: translatex(40%); }
+    #btn-up { grid-area: up; }
+    #btn-left { grid-area: left;}
     #btn-down { grid-area: down; }
-    #btn-right { grid-area: right; transform: translatex(-40%); }
+    #btn-right { grid-area: right; }
 
     #controles button:active,
     #controles button.pressed {
+        transform: translateX(-800%);
         background-color: rgba(150, 150, 150, 0.9);
-        transform: scale(0.95);
+        
     }
 }

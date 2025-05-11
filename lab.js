@@ -8,10 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    const labText = `Welcome to the Lab!\n 
-      Here you can find information about\n
-      my technical skills and projects.\n
-      Feel free to explore!\n`;
+    const labText = ``;
 
     const textElement = createLabTextDisplay();
     textElement.innerHTML = labText.replace(/\n/g, '<br>');
@@ -37,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
         img.style.objectFit = 'contain';
         
         // Create clickable areas
+        // Add this helper function at the start of DOMContentLoaded
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Modify the click area event listeners in createImagePopup
         fetch(isMobile() ? 'labAreasMobile.Json' : 'labAreas.Json')
             .then(response => response.json())
             .then(data => {
@@ -49,7 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     clickArea.style.height = `${area.height}px`;
                     clickArea.style.cursor = 'pointer';
                     
-                    clickArea.addEventListener('click', () => {
+                    clickArea.addEventListener('click', (e) => {
+                        if (isMobile()) {
+                            e.stopPropagation(); // Prevent event bubbling on mobile
+                        }
+                        
                         if (area.cv) {
                             const link = document.createElement('a');
                             link.href = area.cv;
@@ -63,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const keyDownEvent = new KeyboardEvent('keydown', {
                                 key: 's',
                                 code: 'KeyS',
-                                bubbles: true
+                                bubbles: !isMobile() // Don't bubble events on mobile
                             });
                             document.dispatchEvent(keyDownEvent);
                             
@@ -71,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const keyUpEvent = new KeyboardEvent('keyup', {
                                     key: 's',
                                     code: 'KeyS',
-                                    bubbles: true
+                                    bubbles: !isMobile()
                                 });
                                 document.dispatchEvent(keyUpEvent);
                             }, 10);
@@ -120,13 +127,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Modify keyboard event listeners
-    document.addEventListener('keydown', (e) => {
-        if ((e.key === 'w' || e.key === 'ArrowUp') && currentTrigger?.imagePopup) {
+    // Add event listener for virtual button
+    document.getElementById('btn-up')?.addEventListener('click', () => {
+        if (currentTrigger?.imagePopup) {
             imagePopup.style.display = 'block';
         }
-        if ((e.key === 's' || e.key === 'ArrowDown') && imagePopup.style.display === 'block') {
+    });
+
+    // Modify keyboard event listeners to handle both physical and virtual inputs
+    document.addEventListener('keydown', (e) => {
+        if (currentTrigger?.imagePopup && 
+            (e.key === 'w' || 
+             e.key === 'ArrowUp' || 
+             (e.target && e.target.id === 'btn-up') ||
+             (e.type === 'touchstart' && e.target.id === 'btn-up'))) {
+            imagePopup.style.display = 'block';
+        }
+        if ((e.key === 's' || e.key === 'ArrowDown' || e.target.id === 'btn-down') && imagePopup.style.display === 'block') {
             imagePopup.style.display = 'none';
+        }
+    });
+
+    // Add touch event listener for mobile
+    document.getElementById('btn-up')?.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (currentTrigger?.imagePopup) {
+            imagePopup.style.display = 'block';
         }
     });
 
@@ -196,43 +222,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function simulateDebugKeyPress() {
-        // First press
-        const keyDownEvent1 = new KeyboardEvent('keydown', {
-            key: 'c',
-            code: 'KeyC',
-            bubbles: true
-        });
-        document.dispatchEvent(keyDownEvent1);
-        
-        setTimeout(() => {
-            const keyUpEvent1 = new KeyboardEvent('keyup', {
-                key: 'c',
-                code: 'KeyC',
-                bubbles: true
-            });
-            document.dispatchEvent(keyUpEvent1);
 
-            // Second press after first one completes
-            setTimeout(() => {
-                const keyDownEvent2 = new KeyboardEvent('keydown', {
-                    key: 'c',
-                    code: 'KeyC',
-                    bubbles: true
-                });
-                document.dispatchEvent(keyDownEvent2);
-
-                setTimeout(() => {
-                    const keyUpEvent2 = new KeyboardEvent('keyup', {
-                        key: 'c',
-                        code: 'KeyC',
-                        bubbles: true
-                    });
-                    document.dispatchEvent(keyUpEvent2);
-                }, 0.1);
-            }, 0.1);
-        }, 0.1);
-    }
-
-    // Call the function when the lab loads
-    setTimeout(simulateDebugKeyPress, 200);

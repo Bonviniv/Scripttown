@@ -5,12 +5,26 @@
 let typingTimeout = null;
 let isTyping = false;
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Add this near the start of DOMContentLoaded
+    // Check if device is mobile and add orientation change listener
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+        localStorage.setItem('localVolume', '0');
+        window.addEventListener('orientationchange', function() {
+            location.reload();
+        });
+    }
+});
+
 // Initialize game when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add font-face declaration at the start
     // Load texts for current scenario
+    console.log("localVolume = ", localStorage.getItem('localVolume'));
+    
     loadTexts();
-    const fontFace = new FontFace('PokemonFireRed', 'url("assets/fonts/pokemon-firered-leafgreen-font-recreation.ttf")');
+    const fontFace = new FontFace('PokemonFireRed', 'url("fonte/pokemon-firered-leafgreen-font-recreation.ttf")');
     fontFace.load().then(function(loadedFace) {
         document.fonts.add(loadedFace);
     }).catch(function(error) {
@@ -34,15 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Audio element
     const bgMusic = document.getElementById('bg-music');
     const volumeControl = document.getElementById('volume');
+
+   
     
     // Initialize audio
     if (bgMusic && volumeControl) {
         const volumeIcon = document.getElementById('volume-icon');
-        
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         // Set initial volume and update slider background
-        volumeControl.value = 0.15;
-        bgMusic.volume = 0.15;
-        const initialValue = 15;
+        volumeControl.value = 0;
+        bgMusic.volume = 0;
+        const initialValue = 0;
         volumeControl.style.background = `linear-gradient(to right, #7a7f7f ${initialValue}%, #c9cece ${initialValue}%)`;
         
         // Add click handler for volume icon
@@ -54,17 +70,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgMusic.volume = 0;
                 volumeIcon.textContent = '🔇';
                 volumeControl.style.background = `linear-gradient(to right, #7a7f7f 0%, #c9cece 0%)`;
+                localStorage.setItem('localVolume', '0');
             } else {
                 // Restore previous volume or default to 0.15
-                const previousVolume = volumeIcon.dataset.previousVolume || 0.15;
+                let previousVolume = 0;
+
+                if(volumeIcon.dataset.previousVolume){
+                    previousVolume= volumeIcon.dataset.previousVolume;
+
+                }else if(localStorage.getItem('localVolume')!= null && localStorage.getItem('localVolume')!= -1){
+
+                    previousVolume= localStorage.getItem('localVolume');
+
+                }else{
+                    previousVolume= 0;
+
+                }
+                
                 volumeControl.value = previousVolume;
                 bgMusic.volume = previousVolume;
                 const value = previousVolume * 100;
                 volumeControl.style.background = `linear-gradient(to right, #7a7f7f ${value}%, #c9cece ${value}%)`;
                 updateVolumeIcon(previousVolume);
+               
+
+                
             }
         });
 
+        if(localStorage.getItem('localVolume') != null && localStorage.getItem('localVolume') != -1){
+            const savedVolume = localStorage.getItem('localVolume');
+            bgMusic.volume = savedVolume;
+            volumeControl.value = savedVolume; // Set the slider position
+            console.log("bgMusic.volume = ", bgMusic.volume);
+            updateVolumeIcon(bgMusic.volume);
+            
+            const volSet = bgMusic.volume * 100;
+            
+            // Update slider background
+            volumeControl.style.background = `linear-gradient(to right, #7a7f7f ${volSet}%, #c9cece ${volSet}%)`;
+        }
 
     
         // Helper function to update volume icon
@@ -79,13 +124,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 volumeIcon.textContent = '🔊';
             }
         }
+
+         // Helper function to update volume icon
+         function updateVolumeLocalVariable(value) {
+            localStorage.setItem('localVolume', value);
+
+        }
+
+
         
-        // Play music when page loads
-        document.addEventListener('click', function playAudio() {
-            bgMusic.play();
-            document.removeEventListener('click', playAudio);
+        // Update volume control to start music when changed
+        volumeControl.addEventListener('input', function() {
+            if (this.value > 0) {
+                bgMusic.play().catch(error => console.log("Playback failed:", error));
+            }
+            bgMusic.volume = this.value;
+            const value = this.value * 100;
+            
+            this.style.background = `linear-gradient(to right, #7a7f7f ${value}%, #c9cece ${value}%)`;
+            updateVolumeLocalVariable(this.value);
+            updateVolumeIcon(this.value);
         });
-        
+
+        // Update volume icon click handler
+        volumeIcon.addEventListener('click', function() {
+            if (bgMusic.volume > 0) {
+                // Muting logic remains the same...
+            } else {
+                // Unmuting logic
+                let previousVolume = volumeIcon.dataset.previousVolume || 
+                    (localStorage.getItem('localVolume') != null ? localStorage.getItem('localVolume') : 0);
+                
+                if (previousVolume > 0) {
+                    bgMusic.play().catch(error => console.log("Playback failed:", error));
+                }
+                // Rest of unmuting logic remains the same...
+            }
+        });
+        // Add touch events for mobile
+        volumeControl.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevent default touch behavior
+        });
+
+        volumeControl.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const slider = e.target;
+            const rect = slider.getBoundingClientRect();
+            const position = (touch.clientX - rect.left) / rect.width;
+            const value = Math.max(0, Math.min(1, position));
+            
+            slider.value = value;
+            bgMusic.volume = value;
+            const percentage = value * 100;
+            slider.style.background = `linear-gradient(to right, #7a7f7f ${percentage}%, #c9cece ${percentage}%)`;
+            
+            updateVolumeLocalVariable(value);
+            updateVolumeIcon(value);
+        });
         // Update volume and slider when changed
         volumeControl.addEventListener('input', function() {
             bgMusic.volume = this.value;
@@ -95,6 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.style.background = `linear-gradient(to right, #7a7f7f ${value}%, #c9cece ${value}%)`;
             
             console.log("vol = ", this.value);
+
+            updateVolumeLocalVariable(this.value) ;
+            console.log("localVolume = ", localStorage.getItem('localVolume'));
             
             // Update volume icon based on level
             if (this.value == 0) {
@@ -159,6 +258,34 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // Set up mobile buttons
+    setupMobileButton('btn-c', 'c');
+    const btnC = document.getElementById('btn-c');
+    if (btnC) {
+        btnC.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            // Simulate 'C' key press
+            const keyEvent = new KeyboardEvent('keydown', {
+                key: 'c',
+                code: 'KeyC',
+                bubbles: true
+            });
+            document.dispatchEvent(keyEvent);
+            personagem.toggleCollisionBoxes();
+        });
+
+        btnC.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Simulate 'C' key press
+            const keyEvent = new KeyboardEvent('keydown', {
+                key: 'c',
+                code: 'KeyC',
+                bubbles: true
+            });
+            document.dispatchEvent(keyEvent);
+            personagem.toggleCollisionBoxes();
+        });
+    }
+
     setupMobileButton('btn-up', 'w');
     setupMobileButton('btn-left', 'a');
     setupMobileButton('btn-down', 's');
@@ -186,7 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'index': 'pallet-town',
             'lab': 'lab',
             'casa': 'casa',
-            'casa2': 'casa2'
+            'casa2': 'casa2',
+            'casa2quarto': 'casa2quarto'
         };
         const currentScenario = scenarioMap[currentPage] || 'pallet-town';
 
@@ -222,7 +350,8 @@ function loadTexts() {
         'index': 'pallet-town',
         'lab': 'lab',
         'casa': 'casa',
-        'casa2': 'casa2'
+        'casa2': 'casa2',
+        'casa2quarto': 'casa2quarto'
     };
     const currentScenario = scenarioMap[currentPage] || 'pallet-town';
 
@@ -349,9 +478,43 @@ function loadTexts() {
     console.log('Game initialized');
 });
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'c' || e.key === 'C') {
-        const collisionControls = document.getElementById('collision-controls');
-        collisionControls.classList.toggle('show');
-    }
-});
+function simulateDebugKeyPress() {
+    // First press
+    const keyDownEvent1 = new KeyboardEvent('keydown', {
+        key: 'c',
+        code: 'KeyC',
+        bubbles: true
+    });
+    document.dispatchEvent(keyDownEvent1);
+    
+    setTimeout(() => {
+        const keyUpEvent1 = new KeyboardEvent('keyup', {
+            key: 'c',
+            code: 'KeyC',
+            bubbles: true
+        });
+        document.dispatchEvent(keyUpEvent1);
+
+        // Second press after first one completes
+        setTimeout(() => {
+            const keyDownEvent2 = new KeyboardEvent('keydown', {
+                key: 'c',
+                code: 'KeyC',
+                bubbles: true
+            });
+            document.dispatchEvent(keyDownEvent2);
+
+            setTimeout(() => {
+                const keyUpEvent2 = new KeyboardEvent('keyup', {
+                    key: 'c',
+                    code: 'KeyC',
+                    bubbles: true
+                });
+                document.dispatchEvent(keyUpEvent2);
+            }, 0.1);
+        }, 0.1);
+    }, 0.1);
+}
+
+// Call the function when the lab loads
+setTimeout(simulateDebugKeyPress, 200);
